@@ -30,4 +30,43 @@ class ChampionRepository extends ServiceEntityRepository
     {
         return $this->findBy([], ['name' => 'ASC']);
     }
+
+    /**
+     * Search champions by name or title
+     */
+    public function findByNameOrTitle(string $query): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.name LIKE :query OR c.title LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Autocomplete search - returns partial matches
+     */
+    public function findByNameOrTitleAutocomplete(string $query): array
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.name LIKE :query OR c.title LIKE :query')
+            ->setParameter('query', $query . '%')
+            ->orderBy('c.name', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get top champions by pick rate
+     */
+    public function findTopByPickRate(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.pickRate', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

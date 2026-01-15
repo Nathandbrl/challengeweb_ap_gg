@@ -14,19 +14,12 @@
   </div>
 
   <div *ngIf="!loading && champions.length > 0" class="champions-content">
-    <!-- Barre de recherche -->
+    <!-- Barre de recherche améliorée avec autocomplete -->
     <div class="search-container">
-      <mat-form-field class="search-field">
-        <mat-label>Rechercher un champion...</mat-label>
-        <input matInput 
-               [(ngModel)]="searchQuery" 
-               (ngModelChange)="onSearchChange()"
-               placeholder="Ex: Ashe, Garen, etc.">
-        <mat-icon matPrefix>search</mat-icon>
-        <button *ngIf="searchQuery" mat-icon-button matSuffix (click)="searchQuery=''; onSearchChange()">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
+      <app-champion-search 
+        (searchResults)="onSearchChange($event)"
+        (championSelected)="onChampionSelected($event)"
+      ></app-champion-search>
       <div class="search-results-count">
         {{ filteredChampions.length }} champion{{ filteredChampions.length !== 1 ? 's' : '' }}
       </div>

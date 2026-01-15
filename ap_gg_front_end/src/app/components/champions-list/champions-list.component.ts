@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ChampionService, Champion } from '../../services/champion.service';
+import { ChampionSearchComponent } from '../champion-search/champion-search.component';
 
 @Component({
   selector: 'app-champions-list',
@@ -26,7 +27,8 @@ import { ChampionService, Champion } from '../../services/champion.service';
     MatTabsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
+    MatIconModule,
+    ChampionSearchComponent
   ],
   templateUrl: './champions-list.component.html',
   styleUrls: ['./champions-list.component.css']
@@ -67,7 +69,13 @@ export class ChampionsListComponent implements OnInit {
     this.applyFilters();
   }
 
-  onSearchChange(): void {
+  onSearchChange(results: Champion[]): void {
+    this.filteredChampions = results;
+  }
+
+  onChampionSelected(champion: Champion): void {
+    // Navigator to champion detail or highlight it
+    this.searchQuery = champion.name;
     this.applyFilters();
   }
 
@@ -100,3 +108,4 @@ export class ChampionsListComponent implements OnInit {
     return `/champion/${name}`;
   }
 }
+

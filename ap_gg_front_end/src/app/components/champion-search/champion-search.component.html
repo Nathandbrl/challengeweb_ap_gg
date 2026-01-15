@@ -1,0 +1,38 @@
+<div class="search-wrapper">
+  <mat-form-field class="search-field" appearance="outline">
+    <mat-label>Rechercher un champion...</mat-label>
+    <input
+      matInput
+      [formControl]="searchControl"
+      [matAutocomplete]="auto"
+      placeholder="Ex: Ashe, Garen, Lux..."
+      (keydown.enter)="performSearch()"
+    />
+    <mat-icon matPrefix>search</mat-icon>
+    <button
+      *ngIf="searchControl.value"
+      mat-icon-button
+      matSuffix
+      (click)="clearSearch()"
+      type="button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+    <mat-option *ngFor="let champion of (filteredSuggestions$ | async)" [value]="champion">
+      <div class="suggestion-item">
+        <img
+          [src]="champion.imageUrl || 'assets/default-champion.png'"
+          [alt]="champion.name"
+          class="champion-thumbnail"
+        />
+        <div class="suggestion-content">
+          <div class="suggestion-name">{{ champion.name }}</div>
+          <div class="suggestion-role">{{ champion.role }}</div>
+        </div>
+      </div>
+    </mat-option>
+  </mat-autocomplete>
+</div>
