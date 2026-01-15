@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  postgresql:
+    image: postgres:16-alpine
+    container_name: apgg_postgres
+    environment:
+      POSTGRES_DB: ap_gg
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Chanel01+
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./ap_gg_back_end
+      dockerfile: Dockerfile
+    container_name: apgg_backend
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "postgresql://postgres:Chanel01+@postgresql:5432/ap_gg?serverVersion=16&charset=utf8"
+      APP_ENV: dev
+    volumes:
+      - ./ap_gg_back_end:/app
+    command: |
+      sh -c "
+        php bin/console doctrine:migrations:migrate --no-interaction &&
+        php bin/console doctrine:fixtures:load --no-interaction &&
+        php bin/console server:run 0.0.0.0:8000
+      "
+
+  frontend:
+    build:
+      context: ./ap_gg_front_end
+      dockerfile: Dockerfile
+    container_name: apgg_frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:4200"
+    environment:
+      ANGULAR_API_URL: http://localhost:8000/api
+    volumes:
+      - ./ap_gg_front_end:/app
+    command: npm start -- --host 0.0.0.0
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    name: apgg_network

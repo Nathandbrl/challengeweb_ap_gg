@@ -1,0 +1,206 @@
+.champions-container {
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  margin: 0 0 0.5rem 0;
+  color: #0066cc;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.error-message {
+  color: #d32f2f;
+  padding: 1rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  gap: 1rem;
+}
+
+/* Barre de recherche */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  justify-content: center;
+}
+
+.search-field {
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-field ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+.search-results-count {
+  color: #666;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.champions-content {
+  margin-top: 2rem;
+}
+
+.role-tabs ::ng-deep .mat-mdc-tab-labels {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Grille des champions */
+.champions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.champion-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.champion-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 102, 204, 0.25);
+}
+
+.champion-card mat-card-header {
+  padding: 0;
+  margin: 0;
+}
+
+.champion-card .champion-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0;
+  display: block;
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+}
+
+.champion-card mat-card-content {
+  padding: 1rem;
+}
+
+.champion-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.champion-card .title {
+  margin: 0.25rem 0;
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.champion-card .role {
+  margin: 0.5rem 0;
+  color: #0066cc;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  background-color: rgba(0, 102, 204, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.champion-card .stats {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.champion-card .stat {
+  flex: 1;
+  background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+  padding: 0.75rem;
+  border-radius: 4px;
+  text-align: center;
+  border-left: 3px solid #0066cc;
+}
+
+.champion-card .stat .label {
+  display: block;
+  color: #999;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.champion-card .stat .value {
+  display: block;
+  color: #0066cc;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.champion-card mat-card-actions {
+  padding: 1rem;
+  text-align: center;
+}
+
+.champion-card button {
+  width: 100%;
+  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%) !important;
+  color: white !important;
+}
+
+.champion-card button:hover {
+  opacity: 0.9;
+}
+}
+
+@media (max-width: 768px) {
+  .champions-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .champions-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,144 @@
+.search-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.search-form {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  mat-form-field {
+    flex: 1;
+  }
+
+  button {
+    align-self: flex-end;
+  }
+}
+
+.error-message {
+  color: #d32f2f;
+  padding: 1rem;
+  background-color: #ffebee;
+  border-radius: 4px;
+  margin: 1rem 0;
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.player-card {
+  margin-top: 2rem;
+}
+
+.player-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.player-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #1976d2;
+}
+
+.player-details {
+  flex: 1;
+
+  h2 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+  }
+
+  .tag-line {
+    margin: 0;
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .level {
+    margin: 0.5rem 0 0 0;
+    color: #1976d2;
+    font-weight: bold;
+  }
+}
+
+.rank-info {
+  text-align: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+
+  .rank {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #1976d2;
+  }
+
+  .lp {
+    margin: 0.5rem 0 0 0;
+    color: #666;
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+
+  .stat {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+
+    .stat-label {
+      display: block;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1976d2;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .search-form {
+    flex-direction: column;
+
+    button {
+      align-self: stretch;
+    }
+  }
+
+  .player-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .player-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

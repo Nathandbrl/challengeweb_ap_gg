@@ -1,0 +1,94 @@
+<div class="builds-container">
+  <h1>Builds AP Optimisés</h1>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Chargement des builds...</p>
+  </div>
+
+  <div *ngIf="!loading && builds.length > 0" class="builds-content">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let build of builds; let i = index" [expanded]="i === 0">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="build-header">
+            <span class="champion-name">{{ build.champion.name }}</span>
+            <span class="build-name">{{ build.name }}</span>
+          </mat-panel-title>
+          <mat-panel-description>
+            <div class="header-stats">
+              <span class="wr" *ngIf="build.winRate">WR: {{ build.winRate | number: '1.1-1' }}%</span>
+              <span class="difficulty" [ngClass]="getDifficultyColor(build.difficulty)">
+                {{ build.difficulty || 'N/A' }}
+              </span>
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="build-details">
+          <mat-card class="items-card">
+            <mat-card-header>
+              <mat-card-title>Items ({{ getTotalApBonus(build) | number: '1.0-0' }} AP)</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <div class="items-list">
+                <div *ngFor="let item of build.items" class="item-row">
+                  <div class="item-info">
+                    <h4>{{ item.name }}</h4>
+                    <div class="item-stats">
+                      <span *ngIf="item.apBonus" class="ap-bonus">+{{ item.apBonus }} AP</span>
+                      <span *ngIf="item.gold" class="gold-cost">{{ item.gold }} or</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="build-summary">
+                <div class="summary-stat">
+                  <span class="label">AP Total</span>
+                  <span class="value">{{ getTotalApBonus(build) | number: '1.0-0' }}</span>
+                </div>
+                <div class="summary-stat">
+                  <span class="label">Coût Total</span>
+                  <span class="value">{{ getTotalGold(build) | number: '1.0-0' }} or</span>
+                </div>
+                <div class="summary-stat" *ngIf="build.pickCount">
+                  <span class="label">Picks</span>
+                  <span class="value">{{ build.pickCount }}</span>
+                </div>
+              </div>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="tips-card" *ngIf="build.tips">
+            <mat-card-header>
+              <mat-card-title>Tips & Astuces</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <p>{{ build.tips }}</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card class="description-card" *ngIf="build.description">
+            <mat-card-header>
+              <mat-card-title>Description</mat-card-title>
+            </mat-card-header>
+            
+            <mat-card-content>
+              <p>{{ build.description }}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div *ngIf="!loading && builds.length === 0" class="no-builds">
+    <p>Aucun build disponible pour le moment.</p>
+  </div>
+</div>
