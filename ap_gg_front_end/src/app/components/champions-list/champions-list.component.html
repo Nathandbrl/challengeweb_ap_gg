@@ -37,7 +37,7 @@
                    class="role-tabs">
       <mat-tab label="Tous ({{ champions.length }})"></mat-tab>
       <mat-tab *ngFor="let role of getRoles()" 
-               [label]="role + ' (' + (champions | slice: 0 | filter: role).length + ')'">
+               [label]="role + ' (' + (champions | filter: role).length + ')'">
       </mat-tab>
     </mat-tab-group>
 

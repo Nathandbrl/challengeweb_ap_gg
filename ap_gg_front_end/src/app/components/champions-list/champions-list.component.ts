@@ -27,7 +27,6 @@ import { FilterPipe } from '../../pipes/filter.pipe';
     MatTabsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatFormFieldModule,
     MatIconModule,
     FilterPipe
   ],
