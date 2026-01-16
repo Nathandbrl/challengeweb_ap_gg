@@ -1,4 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Global Dark Theme */
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+/* Common Material Overrides for Dark Mode */
+.mat-mdc-card {
+    background-color: #1e1e24 !important;
+    color: #e0e0e0 !important;
+}
+
+.mat-mdc-form-field-wrapper {
+    background-color: transparent !important;
+}
+
+/* Fix input text color for dark theme */
+.mat-mdc-input-element {
+    color: #e0e0e0 !important;
+    caret-color: #5383e8 !important;
+}
+
+.mdc-text-field--outlined .mdc-notched-outline__leading,
+.mdc-text-field--outlined .mdc-notched-outline__notch,
+.mdc-text-field--outlined .mdc-notched-outline__trailing {
+    border-color: #444 !important;
+}
+
+.mdc-floating-label {
+    color: #aaa !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-floating-label {
+    color: #5383e8 !important;
+}
+
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__leading,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__notch,
+.mat-mdc-form-field.mat-focused .mdc-notched-outline__trailing {
+    border-color: #5383e8 !important;
+}

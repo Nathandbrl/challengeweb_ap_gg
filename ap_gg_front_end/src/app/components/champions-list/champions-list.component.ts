@@ -101,4 +101,21 @@ export class ChampionsListComponent implements OnInit {
   getChampionLink(name: string): string {
     return `/champion/${name}`;
   }
+
+  getChampionIcon(championName: string): string {
+    if (!championName) return 'assets/default-champion.png';
+    let normalized = championName.replace(/[' .]/g, '');
+    normalized = championName.replace(/\w\S*/g, (txt) => {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    }).replace(/[' .]/g, '');
+
+    if (normalized === 'Wukong') normalized = 'MonkeyKing';
+    if (normalized === 'LeBlanc') normalized = 'Leblanc';
+    if (normalized === 'KhaZix') normalized = 'Khazix';
+    if (normalized === 'ChoGath') normalized = 'Chogath';
+    if (normalized === 'KaiSa') normalized = 'Kaisa';
+    if (normalized === 'VelKoz') normalized = 'Velkoz';
+
+    return `https://ddragon.leagueoflegends.com/cdn/14.1.1/img/champion/${normalized}.png`;
+  }
 }

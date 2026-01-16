@@ -1,94 +1,159 @@
-<div class="builds-container">
-  <h1>Builds AP Optimisés</h1>
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <img src="assets/image.png" alt="AP.GG Logo" class="site-logo">
+      <p class="tagline">Dominate the Rift with the Unexpected. The #1 Source for AP Troll Builds.</p>
 
-  <div *ngIf="error" class="error-message">
-    {{ error }}
-  </div>
+      <div class="search-bar-container">
+        <mat-form-field appearance="outline" class="hero-search">
+          <mat-label>Search for a Champion or Summoner...</mat-label>
+          <input matInput placeholder="Ex: Garen, Teemo, Hide on bush">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button color="primary" class="search-btn">GG</button>
+      </div>
+    </div>
+  </section>
 
-  <div *ngIf="loading" class="loading-spinner">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Chargement des builds...</p>
-  </div>
+  <!-- Features / Stats Grid -->
+  <section class="stats-overview">
+    <div class="stat-card">
+      <div class="icon-wrapper">🔥</div>
+      <div class="stat-info">
+        <h3>Trending</h3>
+        <p>AP Lucian Mid</p>
+        <span class="trend-up">+12.5% WR</span>
+      </div>
+    </div>
 
-  <div *ngIf="!loading && builds.length > 0" class="builds-content">
-    <mat-accordion>
-      <mat-expansion-panel *ngFor="let build of builds; let i = index" [expanded]="i === 0">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="build-header">
-            <span class="champion-name">{{ build.champion.name }}</span>
-            <span class="build-name">{{ build.name }}</span>
-          </mat-panel-title>
-          <mat-panel-description>
-            <div class="header-stats">
-              <span class="wr" *ngIf="build.winRate">WR: {{ build.winRate | number: '1.1-1' }}%</span>
-              <span class="difficulty" [ngClass]="getDifficultyColor(build.difficulty)">
-                {{ build.difficulty || 'N/A' }}
-              </span>
-            </div>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
+    <div class="stat-card">
+      <div class="icon-wrapper">👑</div>
+      <div class="stat-info">
+        <h3>Top Tier</h3>
+        <p>AP Malphite</p>
+        <span class="tier-s">S+ Tier</span>
+      </div>
+    </div>
 
-        <div class="build-details">
-          <mat-card class="items-card">
-            <mat-card-header>
-              <mat-card-title>Items ({{ getTotalApBonus(build) | number: '1.0-0' }} AP)</mat-card-title>
-            </mat-card-header>
-            
-            <mat-card-content>
-              <div class="items-list">
-                <div *ngFor="let item of build.items" class="item-row">
-                  <div class="item-info">
-                    <h4>{{ item.name }}</h4>
-                    <div class="item-stats">
-                      <span *ngIf="item.apBonus" class="ap-bonus">+{{ item.apBonus }} AP</span>
-                      <span *ngIf="item.gold" class="gold-cost">{{ item.gold }} or</span>
-                    </div>
+    <div class="stat-card">
+      <div class="icon-wrapper">✨</div>
+      <div class="stat-info">
+        <h3>Newest</h3>
+        <p>AP Briar</p>
+        <span class="new-tag">New</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <div class="content-wrapper">
+    <div class="sidebar">
+      <mat-card class="sidebar-card">
+        <mat-card-header>
+          <mat-card-title>Patch Notes 14.2</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <ul class="patch-list">
+            <li>Buff: Stormsurge AP ratio</li>
+            <li>Nerf: Malignance CD</li>
+            <li>New: AP Item added</li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="sidebar-card">
+        <mat-card-header>
+          <mat-card-title>Top Contributors</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="contributor">
+            <div class="avatar">N</div>
+            <span>NathanDBRL</span>
+          </div>
+          <div class="contributor">
+            <div class="avatar">F</div>
+            <span>Faker</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="main-content">
+      <div class="section-header">
+        <h2>Latest Community Builds</h2>
+        <div class="filters">
+          <button mat-button color="primary" class="active">All</button>
+          <button mat-button>Top</button>
+          <button mat-button>Jungle</button>
+          <button mat-button>Mid</button>
+        </div>
+      </div>
+
+      <div *ngIf="loading" class="loading-spinner">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading" class="builds-grid">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let build of builds" class="build-panel">
+            <mat-expansion-panel-header>
+              <div class="panel-header-content">
+                <div class="champ-icon-wrapper">
+                  <img [src]="getChampionIcon(build.champion?.name || '')" [alt]="build.champion?.name"
+                    class="champ-icon" onerror="this.onerror=null; this.src='assets/default-champion.png'">
+                </div>
+                <div class="build-info-main">
+                  <span class="champion-name">{{ build.champion?.name }}</span>
+                  <span class="build-title">{{ build.name }}</span>
+                </div>
+                <div class="build-meta">
+                  <div class="meta-item">
+                    <span class="label">Win Rate</span>
+                    <span class="value win-high">{{ build.winRate || 50 }}%</span>
+                  </div>
+                  <div class="meta-item">
+                    <span class="label">Difficulty</span>
+                    <span class="value difficulty-badge" [class]="getDifficultyColor(build.difficulty)">
+                      {{ build.difficulty || 'Normal' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel-header>
+
+            <div class="build-details-content">
+              <!-- Build Items -->
+              <div class="build-section">
+                <h4>Core Build</h4>
+                <div class="items-row">
+                  <div *ngFor="let item of build.items" class="item-square">
+                    <span class="item-tooltip">{{ item.name }}</span>
+                    <!-- Fallback to placeholder ID/Icon if possible, for now using Boot icon default -->
+                    <img [src]="getItemIcon(item)" class="item-icon">
                   </div>
                 </div>
               </div>
 
-              <div class="build-summary">
-                <div class="summary-stat">
-                  <span class="label">AP Total</span>
-                  <span class="value">{{ getTotalApBonus(build) | number: '1.0-0' }}</span>
+              <!-- Stats/Details -->
+              <div class="build-section">
+                <h4>Summary</h4>
+                <div class="summary-stats">
+                  <div class="s-stat">
+                    <span>Total AP</span>
+                    <strong>{{ getTotalApBonus(build) }}</strong>
+                  </div>
+                  <div class="s-stat">
+                    <span>Cost</span>
+                    <strong>{{ getTotalGold(build) }}g</strong>
+                  </div>
                 </div>
-                <div class="summary-stat">
-                  <span class="label">Coût Total</span>
-                  <span class="value">{{ getTotalGold(build) | number: '1.0-0' }} or</span>
-                </div>
-                <div class="summary-stat" *ngIf="build.pickCount">
-                  <span class="label">Picks</span>
-                  <span class="value">{{ build.pickCount }}</span>
-                </div>
+                <p class="build-desc" *ngIf="build.description">{{ build.description }}</p>
               </div>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="tips-card" *ngIf="build.tips">
-            <mat-card-header>
-              <mat-card-title>Tips & Astuces</mat-card-title>
-            </mat-card-header>
-            
-            <mat-card-content>
-              <p>{{ build.tips }}</p>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="description-card" *ngIf="build.description">
-            <mat-card-header>
-              <mat-card-title>Description</mat-card-title>
-            </mat-card-header>
-            
-            <mat-card-content>
-              <p>{{ build.description }}</p>
-            </mat-card-content>
-          </mat-card>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-
-  <div *ngIf="!loading && builds.length === 0" class="no-builds">
-    <p>Aucun build disponible pour le moment.</p>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
   </div>
 </div>

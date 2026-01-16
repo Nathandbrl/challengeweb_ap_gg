@@ -2,15 +2,26 @@ import { BuildsService } from './builds.service';
 export declare class BuildsController {
     private readonly buildsService;
     constructor(buildsService: BuildsService);
-    findAll(): import(".prisma/client").Prisma.PrismaPromise<({
+    findAll(): Promise<{
+        champion: {
+            id: number;
+            name: string;
+        };
+        items: {
+            id: number;
+            name: string;
+            riotId: string | null;
+            gold: number | null;
+            apBonus: number | null;
+        }[];
         ap_build_items: ({
             items: {
                 id: number;
                 name: string;
                 description: string | null;
+                created_at: Date;
                 image_url: string | null;
                 riot_id: string | null;
-                created_at: Date;
                 gold: number | null;
                 ap_bonus: number | null;
                 other_bonus: number | null;
@@ -22,38 +33,48 @@ export declare class BuildsController {
         champions: {
             id: number;
             name: string;
-            title: string;
             description: string | null;
+            win_rate: number | null;
+            created_at: Date;
+            title: string;
             role: string;
             image_url: string | null;
             pick_rate: number | null;
-            win_rate: number | null;
             riot_id: string | null;
-            created_at: Date;
         };
-    } & {
         id: number;
+        champion_id: number;
         name: string;
         description: string | null;
         win_rate: number | null;
-        created_at: Date;
-        updated_at: Date;
-        champion_id: number;
         pick_count: number | null;
         difficulty: string | null;
         tips: string | null;
         priority: number;
         is_active: boolean;
-    })[]>;
-    findOne(id: string): import(".prisma/client").Prisma.Prisma__ap_buildsClient<({
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
+    findOne(id: string): Promise<{
+        champion: {
+            id: number;
+            name: string;
+        };
+        items: {
+            id: number;
+            name: string;
+            riotId: string | null;
+            gold: number | null;
+            apBonus: number | null;
+        }[];
         ap_build_items: ({
             items: {
                 id: number;
                 name: string;
                 description: string | null;
+                created_at: Date;
                 image_url: string | null;
                 riot_id: string | null;
-                created_at: Date;
                 gold: number | null;
                 ap_bonus: number | null;
                 other_bonus: number | null;
@@ -65,38 +86,48 @@ export declare class BuildsController {
         champions: {
             id: number;
             name: string;
-            title: string;
             description: string | null;
+            win_rate: number | null;
+            created_at: Date;
+            title: string;
             role: string;
             image_url: string | null;
             pick_rate: number | null;
-            win_rate: number | null;
             riot_id: string | null;
-            created_at: Date;
         };
-    } & {
         id: number;
+        champion_id: number;
         name: string;
         description: string | null;
         win_rate: number | null;
-        created_at: Date;
-        updated_at: Date;
-        champion_id: number;
         pick_count: number | null;
         difficulty: string | null;
         tips: string | null;
         priority: number;
         is_active: boolean;
-    }) | null, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
-    findByChampion(name: string): import(".prisma/client").Prisma.PrismaPromise<({
+        created_at: Date;
+        updated_at: Date;
+    } | null>;
+    findByChampion(name: string): Promise<{
+        champion: {
+            id: number;
+            name: string;
+        };
+        items: {
+            id: number;
+            name: string;
+            riotId: string | null;
+            gold: number | null;
+            apBonus: number | null;
+        }[];
         ap_build_items: ({
             items: {
                 id: number;
                 name: string;
                 description: string | null;
+                created_at: Date;
                 image_url: string | null;
                 riot_id: string | null;
-                created_at: Date;
                 gold: number | null;
                 ap_bonus: number | null;
                 other_bonus: number | null;
@@ -108,27 +139,26 @@ export declare class BuildsController {
         champions: {
             id: number;
             name: string;
-            title: string;
             description: string | null;
+            win_rate: number | null;
+            created_at: Date;
+            title: string;
             role: string;
             image_url: string | null;
             pick_rate: number | null;
-            win_rate: number | null;
             riot_id: string | null;
-            created_at: Date;
         };
-    } & {
         id: number;
+        champion_id: number;
         name: string;
         description: string | null;
         win_rate: number | null;
-        created_at: Date;
-        updated_at: Date;
-        champion_id: number;
         pick_count: number | null;
         difficulty: string | null;
         tips: string | null;
         priority: number;
         is_active: boolean;
-    })[]>;
+        created_at: Date;
+        updated_at: Date;
+    }[]>;
 }

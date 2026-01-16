@@ -8,4 +8,5 @@ Server runs on port 8000
 
 Frontend
 cd ap_gg_front_end
+npm install
 npm start

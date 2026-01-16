@@ -21,6 +21,7 @@ export interface ApBuild {
     name: string;
     apBonus?: number;
     gold?: number;
+    riotId?: string;
   }>;
   createdAt: string;
   updatedAt: string;

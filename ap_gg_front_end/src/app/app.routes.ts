@@ -8,4 +8,5 @@ export const routes: Routes = [
   { path: 'search', component: SearchPlayerComponent },
   { path: 'champions', component: ChampionsListComponent },
   { path: 'builds', component: ApBuildsComponent },
+  { path: 'champion/:name', loadComponent: () => import('./components/champion-detail/champion-detail.component').then(m => m.ChampionDetailComponent) },
 ];

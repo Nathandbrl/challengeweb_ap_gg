@@ -1,258 +1,92 @@
-<div class="champion-detail-container">
-  <!-- Header de retour -->
-  <div class="back-button">
-    <button mat-button (click)="goBack()">
-      <mat-icon>arrow_back</mat-icon>
-      Retour aux Champions
-    </button>
-  </div>
+<div class="champion-detail-page" *ngIf="champion">
+  <!-- Hero Section -->
+  <header class="champion-hero">
+    <div class="hero-background" [style.background-image]="'url(' + getSplashUrl() + ')'"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img [src]="getChampionIcon()" [alt]="champion.name" class="champ-main-icon">
+      <div class="champ-basics">
+        <button mat-button class="back-btn" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon> Back to Champions
+        </button>
+        <h1>{{ champion.name }}</h1>
+        <p class="title">{{ champion.title }}</p>
+        <span class="role-tag">{{ champion.role }}</span>
+      </div>
+    </div>
+  </header>
 
-  <!-- Contenu de chargement -->
-  <div *ngIf="loading" class="loading">
-    <mat-spinner></mat-spinner>
-    <p>Chargement du champion...</p>
-  </div>
-
-  <!-- Contenu d'erreur -->
-  <div *ngIf="error" class="error">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>Erreur</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        {{ error }}
-      </mat-card-content>
-    </mat-card>
-  </div>
-
-  <!-- Contenu principal -->
-  <div *ngIf="!loading && champion && buildDetail" class="detail-content">
-    <mat-tab-group>
-      <!-- Onglet Build AP -->
-      <mat-tab label="Build AP 🎯">
-        <!-- En-tête du champion -->
-        <mat-card class="champion-header">
-          <mat-card-header class="header-content">
-            <div class="champion-info">
-              <h1 class="champion-name">{{ champion.name }}</h1>
-              <p class="champion-title">{{ champion.title }}</p>
-              <span class="role-badge" [style.background-color]="getRoleBadgeColor()">
-                {{ champion.role }}
-              </span>
+  <div class="detail-layout">
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Builds Section -->
+      <section class="detail-section">
+        <h2>Recommended AP Builds</h2>
+        <div class="build-item">
+          <h3>Full AP Troll Burst</h3>
+          <p>This build focuses on maximum Ability Power to delete enemies in one rotation. Fun but extremely squishy.
+          </p>
+          <div class="items-row">
+            <div class="item-box" *ngFor="let itemId of randomBuild">
+              <img [src]="getItemUrl(itemId)" [alt]="itemId">
             </div>
-            <div class="champion-stats">
-              <div class="stat">
-                <span class="stat-label">Taux de Pick</span>
-                <span class="stat-value">{{ champion.pickRate | number:'1.1-1' }}%</span>
-              </div>
-              <div class="stat">
-                <span class="stat-label">Taux de Victoire</span>
-                <span class="stat-value">{{ champion.winRate | number:'1.1-1' }}%</span>
-              </div>
-            </div>
-          </mat-card-header>
-        </mat-card>
+          </div>
+        </div>
+      </section>
 
-        <!-- Build Overview -->
-        <mat-card class="build-card">
-          <mat-card-header>
-            <mat-card-title>{{ buildDetail.buildName }}</mat-card-title>
-            <mat-card-subtitle>{{ buildDetail.description }}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="build-difficulty">
-              <span class="difficulty-label">Difficulté:</span>
-              <mat-chip [style.background-color]="'#ff6b6b'">{{ buildDetail.difficulty }}</mat-chip>
+      <!-- Abilities Section -->
+      <section class="detail-section" *ngIf="riotData">
+        <h2>Abilities & Skills</h2>
+        <div class="abilities-grid">
+          <div class="ability-row" *ngFor="let spell of riotData.spells; let i = index">
+            <img [src]="getSpellIcon(spell.image.full)" class="ability-icon" [alt]="spell.name">
+            <div class="ability-info">
+              <h4><span class="key">{{ ['Q', 'W', 'E', 'R'][i] }}</span> {{ spell.name }}</h4>
+              <p class="ability-desc" [innerHTML]="spell.description"></p>
             </div>
-            <p class="build-tips">💡 {{ buildDetail.tips }}</p>
-          </mat-card-content>
-        </mat-card>
+          </div>
+        </div>
+      </section>
+    </main>
 
-        <!-- Ordre de Max des Spells -->
-        <mat-card class="spell-card">
-          <mat-card-header>
-            <mat-card-title>📊 Ordre de Montée des Spells AP</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="spell-max-order">
-              {{ getSpellMaxOrder() }}
-            </div>
-          </mat-card-content>
-        </mat-card>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <section class="detail-section">
+        <h2>Base Stats</h2>
+        <div class="stats-box" *ngIf="riotData">
+          <div class="stat-line">
+            <span class="label">Health</span>
+            <span class="value">{{ riotData.stats.hp }} (+{{ riotData.stats.hpperlevel }})</span>
+          </div>
+          <div class="stat-line">
+            <span class="label">Armor</span>
+            <span class="value">{{ riotData.stats.armor }}</span>
+          </div>
+          <div class="stat-line">
+            <span class="label">Range</span>
+            <span class="value">{{ riotData.stats.attackrange }}</span>
+          </div>
+          <div class="stat-line">
+            <span class="label">Movement Speed</span>
+            <span class="value">{{ riotData.stats.movespeed }}</span>
+          </div>
+        </div>
+        <div class="loading-inline" *ngIf="!riotData">
+          Loading stats from Riot...
+        </div>
+      </section>
 
-        <!-- Runes -->
-        <mat-card class="runes-card">
-          <mat-card-header>
-            <mat-card-title>⚡ Runes Recommandées</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="runes-section">
-              <div class="rune-tree">
-                <h3>Arbre Primaire</h3>
-                <div class="runes-list">
-                  <div *ngFor="let rune of buildDetail.runes.primary" class="rune-item">
-                    <span class="rune-name">{{ rune.name }}</span>
-                  </div>
-                </div>
-              </div>
-              <div class="rune-tree">
-                <h3>Arbre Secondaire</h3>
-                <div class="runes-list">
-                  <div *ngFor="let rune of buildDetail.runes.secondary" class="rune-item">
-                    <span class="rune-name">{{ rune.name }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <!-- Objets -->
-        <mat-card class="items-card">
-          <mat-card-header>
-            <mat-card-title>💎 Build AP Optimal</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="items-section">
-              <div class="item-tier">
-                <h3>Objets de Départ</h3>
-                <div class="items-list">
-                  <div *ngFor="let item of buildDetail.itemBuild.starter" class="item-chip">
-                    {{ item }}
-                  </div>
-                </div>
-              </div>
-              <div class="item-tier">
-                <h3>Build Principal</h3>
-                <div class="items-list">
-                  <div *ngFor="let item of buildDetail.itemBuild.core" class="item-chip core-item">
-                    {{ item }}
-                  </div>
-                </div>
-              </div>
-              <div class="item-tier">
-                <h3>Objets Situationnels</h3>
-                <div class="items-list">
-                  <div *ngFor="let item of buildDetail.itemBuild.situational" class="item-chip situational-item">
-                    {{ item }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <!-- Spells d'Invocateur -->
-        <mat-card class="spells-card">
-          <mat-card-header>
-            <mat-card-title>🔷 Spells d'Invocateur Recommandés</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="spells-list">
-              <div *ngFor="let spell of getRecommendedSummonerSpells()" class="spell-item">
-                <span class="spell-name">{{ spell }}</span>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </mat-tab>
-
-      <!-- Onglet Stats Riot -->
-      <mat-tab label="Stats Officiel 📈" *ngIf="riotChampionData">
-        <mat-card *ngIf="riotChampionData.stats" class="stats-card">
-          <mat-card-header>
-            <mat-card-title>Stats de Base du Champion</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <span class="stat-label">PV</span>
-                <span class="stat-value">{{ riotChampionData.stats.hp }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Armure</span>
-                <span class="stat-value">{{ riotChampionData.stats.armor }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Résistance Magique</span>
-                <span class="stat-value">{{ riotChampionData.stats.spellblock }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Vitesse d'Attaque</span>
-                <span class="stat-value">{{ riotChampionData.stats.attackspeed }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Portée</span>
-                <span class="stat-value">{{ riotChampionData.stats.attackrange }}</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-label">Régénération PV</span>
-                <span class="stat-value">{{ riotChampionData.stats.hpregen }}</span>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <!-- Spells Officiels -->
-        <mat-card *ngIf="riotChampionData.spells" class="abilities-card">
-          <mat-card-header>
-            <mat-card-title>Capacités du Champion</mat-card-title>
-          </mat-card-header>
-          <mat-divider></mat-divider>
-          <mat-card-content>
-            <div *ngFor="let spell of riotChampionData.spells; let i = index" class="ability-item">
-              <h4>{{ ['Passif', 'Q', 'W', 'E', 'R'][i] }} - {{ spell.name }}</h4>
-              <p class="ability-description">{{ spell.description }}</p>
-              <p *ngIf="spell.cooldown" class="ability-cooldown">⏱️ Cooldown: {{ spell.cooldown[0] }}s</p>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </mat-tab>
-    </mat-tab-group>
+      <section class="detail-section">
+        <h2>Tips</h2>
+        <ul *ngIf="riotData">
+          <li *ngFor="let tip of riotData.allytips.slice(0, 3)">{{ tip }}</li>
+        </ul>
+      </section>
+    </aside>
   </div>
 </div>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <div class="summoner-spells">
-          <mat-chip *ngFor="let spell of buildDetail.summonerSpells" class="spell-chip">
-            {{ spell }}
-          </mat-chip>
-        </div>
-      </mat-card-content>
-    </mat-card>
 
-    <!-- Conseils de Gameplay -->
-    <mat-card class="tips-card">
-      <mat-card-header>
-        <mat-card-title>💡 Conseils de Gameplay</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <div class="tips-section">
-          <div class="tip-category">
-            <h3>En Lane</h3>
-            <p class="tip-text">{{ buildDetail.laning }}</p>
-          </div>
-          <div class="tip-category">
-            <h3>En Teamfight</h3>
-            <p class="tip-text">{{ buildDetail.teamfight }}</p>
-          </div>
-          <div class="tips-list">
-            <div *ngFor="let tip of buildDetail.tips" class="tip-item">
-              <mat-icon>info</mat-icon>
-              <span>{{ tip }}</span>
-            </div>
-          </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-
-  </div>
+<div class="loading-overlay" *ngIf="loading">
+  <mat-spinner color="primary"></mat-spinner>
+  <p>Loading Champion Intel...</p>
 </div>

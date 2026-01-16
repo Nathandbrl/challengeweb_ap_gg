@@ -1,449 +1,283 @@
-.champion-detail-container {
-  padding: 20px;
-  max-width: 1000px;
+.champion-detail-page {
+  background-color: #121212;
+  color: #e0e0e0;
+  min-height: 100vh;
+}
+
+/* Champion Hero Header */
+.champion-hero {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 2px solid #333;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center 20%;
+  filter: blur(4px) brightness(0.4);
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(0deg, rgba(18, 18, 18, 1) 0%, rgba(18, 18, 18, 0.4) 50%, rgba(18, 18, 18, 0) 100%);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-}
-
-.back-button {
-  margin-bottom: 20px;
-}
-
-.back-button button {
-  color: #0066cc;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.loading,
-.error {
+  padding: 0 2rem 3rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-  gap: 20px;
+  align-items: flex-end;
+  gap: 2rem;
 }
 
-.detail-content {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+.champ-main-icon {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #5383e8;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Champion Header */
-.champion-header {
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-  color: white;
-}
-
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 30px;
-  padding: 20px;
-}
-
-.champion-info {
+.champ-basics {
   flex: 1;
 }
 
-.champion-name {
+.champ-basics h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
   margin: 0;
-  font-size: 2.5rem;
-  font-weight: bold;
+  line-height: 1;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
 }
 
-.champion-title {
-  margin: 5px 0 10px 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
-}
-
-.role-badge {
-  display: inline-block;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.champion-stats {
-  display: flex;
-  gap: 30px;
-}
-
-.stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-label {
-  font-size: 0.85rem;
-  opacity: 0.8;
-  margin-bottom: 3px;
-}
-
-.stat-value {
-  font-size: 1.8rem;
-  font-weight: bold;
-}
-
-/* Build Cards */
-.build-card,
-.spell-card,
-.runes-card,
-.items-card,
-.spells-card,
-.tips-card {
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.build-card mat-card-header {
-  background: linear-gradient(135deg, #f0f0f0 0%, #e8e8e8 100%);
-  padding: 15px;
-}
-
-.build-difficulty {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.difficulty-label {
-  font-weight: 600;
-  color: #333;
-}
-
-/* Spell Max Order */
-.spell-max-order {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 10px;
-  padding: 15px 0;
-}
-
-.spell-level {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  gap: 8px;
-}
-
-.level-number {
-  font-size: 0.75rem;
-  color: #666;
-  font-weight: 600;
-}
-
-.spell-letter {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 1.2rem;
-  color: white;
-}
-
-.spell-Q {
-  background: linear-gradient(135deg, #4ecdc4 0%, #44b9a8 100%);
-}
-
-.spell-W {
-  background: linear-gradient(135deg, #ffe66d 0%, #ffb800 100%);
-}
-
-.spell-E {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
-}
-
-.spell-R {
-  background: linear-gradient(135deg, #a29bfe 0%, #9370db 100%);
-  box-shadow: 0 4px 12px rgba(147, 112, 219, 0.3);
-}
-
-/* Runes */
-.runes-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 15px 0;
-}
-
-.rune-tree h3 {
-  margin: 0 0 12px 0;
-  color: #333;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.runes-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.rune-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  background: #f9f9f9;
-  border-radius: 6px;
-  border-left: 3px solid #0066cc;
-}
-
-.rune-icon {
-  font-size: 1.3rem;
-}
-
-.rune-name {
-  color: #333;
-  font-weight: 500;
-}
-
-/* Items */
-.items-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  padding: 15px 0;
-}
-
-.item-tier h3 {
-  margin: 0 0 12px 0;
-  color: #333;
-  font-size: 1rem;
-}
-
-.items-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.item-chip {
-  padding: 8px 14px !important;
-  background: white !important;
-  border: 2px solid #0066cc !important;
-  color: #0066cc !important;
-  font-weight: 500 !important;
-  border-radius: 6px !important;
-}
-
-.item-chip.core-item {
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%) !important;
-  color: white !important;
-  border-color: #0052a3 !important;
-}
-
-.item-chip.situational-item {
-  background: linear-gradient(135deg, #4ecdc4 0%, #44b9a8 100%) !important;
-  color: white !important;
-  border-color: #44b9a8 !important;
-}
-
-.items-list mat-chip {
-  background: white;
-  border: 2px solid #0066cc;
-  color: #0066cc;
-  font-weight: 500;
-}
-
-.items-list mat-chip.core-item {
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-  color: white;
-  border-color: #0052a3;
-}
-
-.items-list mat-chip.situational-item {
-  background: linear-gradient(135deg, #4ecdc4 0%, #44b9a8 100%);
-  color: white;
-  border-color: #44b9a8;
-}
-
-/* Summoner Spells */
-.summoner-spells {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 15px 0;
-}
-
-.spell-chip {
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%) !important;
-  color: white !important;
-  font-weight: 600;
-}
-
-.spells-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 15px 0;
-}
-
-.spell-item {
-  padding: 12px 20px;
-  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
-  color: white;
-  border-radius: 6px;
-  font-weight: 600;
-  box-shadow: 0 2px 6px rgba(255, 107, 107, 0.2);
-}
-
-/* Stats Grid (Riot) */
-.stats-card {
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
-  padding: 15px 0;
-}
-
-.stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px;
-  background: linear-gradient(135deg, #f5f5f5 0%, #f0f0f0 100%);
-  border-radius: 8px;
-  border-left: 4px solid #0066cc;
-}
-
-.stat-item .stat-label {
-  font-size: 0.85rem;
-  color: #666;
-  margin-bottom: 8px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-item .stat-value {
+.champ-basics .title {
   font-size: 1.5rem;
+  color: #aaa;
+  margin: 0.5rem 0;
+  text-transform: capitalize;
+}
+
+.role-tag {
+  display: inline-block;
+  background: #5383e8;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
   font-weight: bold;
-  color: #0066cc;
+  font-size: 0.9rem;
+  text-transform: uppercase;
 }
 
-/* Abilities Card (Riot) */
-.abilities-card {
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Main Layout */
+.detail-layout {
+  max-width: 1200px;
+  margin: 2rem auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  padding: 0 1rem 4rem;
 }
 
-.ability-item {
-  padding: 16px;
-  background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+.detail-section {
+  background: #1e1e24;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-section h2 {
+  font-size: 1.2rem;
+  border-left: 4px solid #5383e8;
+  padding-left: 1rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* Builds Grid */
+.build-item {
+  background: #2a2a35;
+  border: 1px solid #444;
   border-radius: 8px;
-  border-left: 4px solid #0066cc;
-  margin-bottom: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
 }
 
-.ability-item h4 {
-  margin: 0 0 8px 0;
-  color: #0066cc;
-  font-size: 1.1rem;
-  font-weight: 600;
+.build-item h3 {
+  margin-top: 0;
+  color: #5383e8;
 }
 
-.ability-description {
-  margin: 0 0 8px 0;
-  color: #666;
-  line-height: 1.6;
-  font-size: 0.95rem;
+.items-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
-.ability-cooldown {
-  margin: 0;
-  color: #999;
-  font-size: 0.85rem;
-  font-style: italic;
+.item-box {
+  width: 48px;
+  height: 48px;
+  background: #111;
+  border: 1px solid #555;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-/* Tips */
-.tips-section {
-  padding: 15px 0;
+.item-box img {
+  width: 100%;
+  height: 100%;
 }
 
-.tip-category {
-  margin-bottom: 20px;
-}
-
-.tip-category h3 {
-  margin: 0 0 8px 0;
-  color: #333;
-  font-size: 1rem;
-}
-
-.tip-text {
-  margin: 0;
-  color: #666;
-  line-height: 1.5;
-  padding-left: 12px;
-  border-left: 3px solid #4ecdc4;
-}
-
-.tips-list {
+/* Abilities */
+.abilities-grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 15px;
+  gap: 1.5rem;
 }
 
-.tip-item {
+.ability-row {
   display: flex;
+  gap: 1.5rem;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px;
-  background: #f0f7ff;
-  border-radius: 6px;
-  color: #0066cc;
 }
 
-.tip-item mat-icon {
-  font-size: 1.2rem;
-  width: 1.2rem;
-  height: 1.2rem;
-  margin-top: 2px;
+.ability-icon {
+  width: 64px;
+  height: 64px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.ability-info h4 {
+  margin: 0;
+  color: #fff;
+}
+
+.ability-info .key {
+  color: #5383e8;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.ability-desc {
+  color: #aaa;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 0;
+}
+
+/* Sidebar */
+.stats-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stat-line {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+.stat-line .label {
+  color: #888;
+}
+
+.stat-line .value {
+  color: #fff;
+  font-weight: bold;
+}
+
+.back-btn {
+  margin-bottom: 1rem;
+  color: #aaa;
+}
+
+@media (max-width: 900px) {
+  .detail-layout {
+    grid-template-columns: 1fr;
+    margin-top: 1rem;
+  }
+
+  .sidebar {
+    order: 2;
+  }
+
+  .main-content {
+    order: 1;
+  }
 }
 
 @media (max-width: 768px) {
-  .header-content {
+  .champion-hero {
+    height: 300px;
+  }
+
+  .hero-content {
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 1.5rem;
+    gap: 1rem;
   }
 
-  .champion-name {
-    font-size: 2rem;
+  .champ-main-icon {
+    width: 90px;
+    height: 90px;
   }
 
-  .champion-stats {
+  .champ-basics h1 {
+    font-size: 2.2rem;
+  }
+
+  .champ-basics .title {
+    font-size: 1.1rem;
+  }
+
+  .ability-row {
     flex-direction: column;
-    gap: 15px;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
   }
 
-  .spell-max-order {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  .ability-icon {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .champion-hero {
+    height: 250px;
   }
 
-  .runes-section {
-    grid-template-columns: 1fr;
+  .champ-basics h1 {
+    font-size: 1.8rem;
+  }
+
+  .items-row {
+    justify-content: center;
   }
 }

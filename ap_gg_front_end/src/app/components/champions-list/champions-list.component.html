@@ -1,6 +1,9 @@
 <div class="champions-container">
   <div class="header">
-    <h1>Champions</h1>
+    <div class="header-brand">
+      <img src="assets/image.png" alt="Logo" class="header-logo">
+      <h1>Champions</h1>
+    </div>
     <p class="subtitle">Explorez tous les champions et leurs builds AP troll</p>
   </div>
 
@@ -18,10 +21,8 @@
     <div class="search-container">
       <mat-form-field class="search-field">
         <mat-label>Rechercher un champion...</mat-label>
-        <input matInput 
-               [(ngModel)]="searchQuery" 
-               (ngModelChange)="onSearchChange()"
-               placeholder="Ex: Ashe, Garen, etc.">
+        <input matInput [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()"
+          placeholder="Ex: Ashe, Garen, etc.">
         <mat-icon matPrefix>search</mat-icon>
         <button *ngIf="searchQuery" mat-icon-button matSuffix (click)="searchQuery=''; onSearchChange()">
           <mat-icon>close</mat-icon>
@@ -34,35 +35,33 @@
 
     <!-- Onglets de filtrage par rôle -->
     <mat-tab-group (selectedIndexChange)="filterByRole($event === 0 ? 'all' : getRoles()[$event - 1])"
-                   class="role-tabs">
+      class="role-tabs">
       <mat-tab label="Tous ({{ champions.length }})"></mat-tab>
-      <mat-tab *ngFor="let role of getRoles()" 
-               [label]="role + ' (' + (champions | filter: role).length + ')'">
+      <mat-tab *ngFor="let role of getRoles()" [label]="role + ' (' + (champions | filter: role).length + ')'">
       </mat-tab>
     </mat-tab-group>
 
     <!-- Grille des champions -->
     <div class="champions-grid">
-      <mat-card *ngFor="let champion of filteredChampions" 
-                class="champion-card"
-                [routerLink]="getChampionLink(champion.name)">
+      <mat-card *ngFor="let champion of filteredChampions" class="champion-card"
+        [routerLink]="getChampionLink(champion.name)">
         <mat-card-header>
-          <img [src]="champion.imageUrl || 'assets/default-champion.png'" 
-               alt="{{ champion.name }}" 
-               class="champion-image">
-          <div class="champion-overlay">
-            <button mat-raised-button color="accent" (click)="$event.stopPropagation()">
-              <mat-icon>arrow_forward</mat-icon>
-              Voir le Build
-            </button>
+          <div class="champion-image-container">
+            <img [src]="getChampionIcon(champion.name)" alt="{{ champion.name }}" class="champion-image"
+              onerror="this.onerror=null; this.src='assets/default-champion.png'">
+            <div class="champion-overlay">
+              <button mat-flat-button color="primary">
+                Voir
+              </button>
+            </div>
           </div>
         </mat-card-header>
-        
+
         <mat-card-content>
           <h3 class="champion-name">{{ champion.name }}</h3>
           <p class="champion-title">{{ champion.title }}</p>
           <span class="role-badge" [class]="'role-' + champion.role">{{ champion.role }}</span>
-          
+
           <div class="stats">
             <div class="stat" *ngIf="champion.winRate">
               <span class="stat-icon">📊</span>

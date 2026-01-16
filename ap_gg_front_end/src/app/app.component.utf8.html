@@ -1,0 +1,26 @@
+﻿<mat-toolbar class="navbar">
+  <div class="logo-container" routerLink="/">
+    <img src="assets/image.png" alt="AP.GG Logo" class="nav-logo">
+  </div>
+
+  <nav class="nav-links">
+    <button mat-button routerLink="/builds" routerLinkActive="active">
+      <mat-icon>build</mat-icon>
+      Builds AP
+    </button>
+
+    <button mat-button routerLink="/champions" routerLinkActive="active">
+      <mat-icon>people</mat-icon>
+      Champions
+    </button>
+
+    <button mat-button routerLink="/search" routerLinkActive="active">
+      <mat-icon>search</mat-icon>
+      Recherche
+    </button>
+  </nav>
+</mat-toolbar>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

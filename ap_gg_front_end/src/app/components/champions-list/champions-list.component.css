@@ -1,32 +1,54 @@
 .champions-container {
   padding: 2rem 1rem;
+  min-height: 100vh;
+  background-color: #121212;
+}
+
+.champions-content {
   max-width: 1400px;
   margin: 0 auto;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid #333;
+  padding: 1.5rem 2rem;
+  background-color: #1e1e24;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.header-logo {
+  height: 50px;
+  width: auto;
 }
 
 .header h1 {
-  margin: 0 0 0.5rem 0;
-  color: #0066cc;
+  margin: 0;
+  color: #fff;
   font-size: 2.5rem;
-  font-weight: bold;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-weight: 800;
+  letter-spacing: -1px;
 }
 
 .subtitle {
   margin: 0;
-  color: #666;
+  color: #aaa;
   font-size: 1rem;
 }
 
 .error-message {
-  color: #d32f2f;
+  color: #ff5252;
   padding: 1rem;
-  background-color: #ffebee;
+  background-color: rgba(255, 82, 82, 0.1);
+  border: 1px solid #ff5252;
   border-radius: 4px;
   margin: 1rem 0;
   text-align: center;
@@ -39,6 +61,7 @@
   justify-content: center;
   padding: 3rem;
   gap: 1rem;
+  color: #5383e8;
 }
 
 /* Barre de recherche */
@@ -46,60 +69,79 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin: 2rem 0;
+  margin: 0 auto 2rem;
   justify-content: center;
+  max-width: 600px;
 }
 
 .search-field {
   width: 100%;
-  max-width: 400px;
 }
 
-.search-field ::ng-deep .mat-mdc-form-field {
-  width: 100%;
+.search-field ::ng-deep .mat-mdc-text-field-wrapper {
+  background-color: #1e1e24;
+  border-radius: 8px;
+}
+
+.search-field ::ng-deep .mat-mdc-form-field-icon-prefix {
+  color: #5383e8;
 }
 
 .search-results-count {
-  color: #666;
+  color: #888;
   font-size: 0.9rem;
   white-space: nowrap;
+  min-width: 100px;
 }
 
-.champions-content {
-  margin-top: 2rem;
+/* Onglets - Forcer les couleurs pour dark mode */
+.role-tabs {
+  margin-bottom: 2rem;
 }
 
-.role-tabs ::ng-deep .mat-mdc-tab-labels {
-  justify-content: center;
-  flex-wrap: wrap;
+::ng-deep .mat-mdc-tab-group {
+  background-color: #1e1e24 !important;
+  border-radius: 8px;
+}
+
+::ng-deep .mat-mdc-tab {
+  color: #aaa !important;
+}
+
+::ng-deep .mat-mdc-tab .mdc-tab__text-label {
+  color: #aaa !important;
+}
+
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #5383e8 !important;
+  font-weight: bold;
+}
+
+::ng-deep .mat-mdc-tab-header {
+  background-color: #1e1e24 !important;
 }
 
 /* Grille des champions */
 .champions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
-  margin-top: 2rem;
 }
 
 .champion-card {
   cursor: pointer;
-  transition: all 0.3s ease;
+  background-color: #1e1e24 !important;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border-radius: 8px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .champion-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 102, 204, 0.25);
+  transform: translateY(-5px);
+  border-color: #5383e8;
+  box-shadow: 0 4px 12px rgba(83, 131, 232, 0.2);
 }
 
 .champion-card mat-card-header {
@@ -107,100 +149,161 @@
   margin: 0;
 }
 
-.champion-card .champion-image {
+.champion-image-container {
   width: 100%;
-  height: 200px;
+  aspect-ratio: 1/1;
+  /* Square for icons typically, or keep header image ratio */
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid #333;
+}
+
+.champion-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px 8px 0 0;
-  display: block;
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+  transition: transform 0.3s ease;
+}
+
+.champion-card:hover .champion-image {
+  transform: scale(1.1);
+}
+
+.champion-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: flex;
+  justify-content: center;
+}
+
+.champion-card:hover .champion-overlay {
+  opacity: 1;
 }
 
 .champion-card mat-card-content {
   padding: 1rem;
+  text-align: center;
 }
 
 .champion-card h3 {
-  margin: 0.5rem 0;
-  font-size: 1.3rem;
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: #1a1a1a;
+  color: #fff;
 }
 
-.champion-card .title {
-  margin: 0.25rem 0;
+.champion-date {
+  font-size: 0.75rem;
   color: #666;
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-.champion-card .role {
-  margin: 0.5rem 0;
-  color: #0066cc;
-  font-weight: bold;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  background-color: rgba(0, 102, 204, 0.1);
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  display: inline-block;
-}
-
-.champion-card .stats {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.champion-card .stat {
-  flex: 1;
-  background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
-  padding: 0.75rem;
-  border-radius: 4px;
-  text-align: center;
-  border-left: 3px solid #0066cc;
-}
-
-.champion-card .stat .label {
+  margin-bottom: 0.5rem;
   display: block;
-  color: #999;
+}
+
+.role-badge {
+  display: inline-block;
   font-size: 0.75rem;
   text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
   font-weight: bold;
+  background-color: #2a2a35;
+  color: #aaa;
+  margin-bottom: 0.75rem;
 }
 
-.champion-card .stat .value {
-  display: block;
-  color: #0066cc;
-  font-weight: bold;
-  font-size: 1.1rem;
+.role-MID {
+  color: #5383e8;
+  border: 1px solid rgba(83, 131, 232, 0.3);
 }
 
-.champion-card mat-card-actions {
-  padding: 1rem;
+.role-TOP {
+  color: #e85353;
+  border: 1px solid rgba(232, 83, 83, 0.3);
+}
+
+.role-JUNGLE {
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.role-ADC {
+  color: #ffd700;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.role-SUPPORT {
+  color: #e040fb;
+  border: 1px solid rgba(224, 64, 251, 0.3);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #333;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.no-results {
   text-align: center;
-}
-
-.champion-card button {
-  width: 100%;
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%) !important;
-  color: white !important;
-}
-
-.champion-card button:hover {
-  opacity: 0.9;
-}
+  padding: 4rem;
+  color: #666;
 }
 
 @media (max-width: 768px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header-logo {
+    height: 40px;
+  }
+
   .champions-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  .search-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-results-count {
+    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
   .champions-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+  }
+
+  .champion-card h3 {
+    font-size: 1rem;
   }
 }
