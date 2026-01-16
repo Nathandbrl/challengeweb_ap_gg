@@ -1,0 +1,16 @@
+import * as runtime from "@prisma/client/runtime/library";
+import * as $Class from "./internal/class.js";
+import * as Prisma from "./internal/prismaNamespace.js";
+export * as $Enums from './enums.js';
+export * from "./enums.js";
+export declare const PrismaClient: $Class.PrismaClientConstructor;
+export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>;
+export { Prisma };
+export type ap_build_items = Prisma.ap_build_itemsModel;
+export type ap_builds = Prisma.ap_buildsModel;
+export type champions = Prisma.championsModel;
+export type doctrine_migration_versions = Prisma.doctrine_migration_versionsModel;
+export type favorite_champions = Prisma.favorite_championsModel;
+export type items = Prisma.itemsModel;
+export type player_statistics = Prisma.player_statisticsModel;
+export type players = Prisma.playersModel;

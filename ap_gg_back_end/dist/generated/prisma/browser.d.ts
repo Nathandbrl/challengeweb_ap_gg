@@ -1,0 +1,12 @@
+import * as Prisma from './internal/prismaNamespaceBrowser.js';
+export { Prisma };
+export * as $Enums from './enums.js';
+export * from './enums.js';
+export type ap_build_items = Prisma.ap_build_itemsModel;
+export type ap_builds = Prisma.ap_buildsModel;
+export type champions = Prisma.championsModel;
+export type doctrine_migration_versions = Prisma.doctrine_migration_versionsModel;
+export type favorite_champions = Prisma.favorite_championsModel;
+export type items = Prisma.itemsModel;
+export type player_statistics = Prisma.player_statisticsModel;
+export type players = Prisma.playersModel;

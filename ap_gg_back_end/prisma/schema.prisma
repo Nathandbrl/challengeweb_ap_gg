@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ap_build_items {
+  ap_build_id Int
+  item_id     Int
+  ap_builds   ap_builds @relation(fields: [ap_build_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  items       items     @relation(fields: [item_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@id([ap_build_id, item_id])
+}
+
+model ap_builds {
+  id             Int              @id @default(autoincrement())
+  champion_id    Int
+  name           String           @db.VarChar(255)
+  description    String?
+  win_rate       Float?
+  pick_count     Int?
+  difficulty     String?          @db.VarChar(50)
+  tips           String?
+  priority       Int              @default(0)
+  is_active      Boolean          @default(true)
+  created_at     DateTime         @db.Timestamp(0)
+  updated_at     DateTime         @db.Timestamp(0)
+  ap_build_items ap_build_items[]
+  champions      champions        @relation(fields: [champion_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([is_active], map: "idx_ap_build_active")
+  @@index([champion_id], map: "idx_ap_build_champion")
+}
+
+model champions {
+  id                 Int                  @id @default(autoincrement())
+  name               String               @unique @db.VarChar(255)
+  title              String               @db.VarChar(255)
+  description        String?
+  role               String               @db.VarChar(50)
+  image_url          String?              @db.VarChar(255)
+  pick_rate          Float?
+  win_rate           Float?
+  riot_id            String?              @db.VarChar(50)
+  created_at         DateTime             @db.Timestamp(0)
+  ap_builds          ap_builds[]
+  favorite_champions favorite_champions[]
+  player_statistics  player_statistics[]
+
+  @@index([name], map: "idx_champion_name")
+  @@index([role], map: "idx_champion_role")
+}
+
+model doctrine_migration_versions {
+  version        String    @id @db.VarChar(191)
+  executed_at    DateTime? @db.Timestamp(0)
+  execution_time Int?
+}
+
+model favorite_champions {
+  id          Int       @id @default(autoincrement())
+  player_id   Int
+  champion_id Int
+  added_at    DateTime  @db.Timestamp(0)
+  champions   champions @relation(fields: [champion_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  players     players   @relation(fields: [player_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([player_id, champion_id], map: "unique_player_champion_fav")
+}
+
+model items {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique @db.VarChar(255)
+  description    String?
+  gold           Int?
+  ap_bonus       Float?
+  other_bonus    Float?
+  image_url      String?          @db.VarChar(255)
+  riot_id        String?          @db.VarChar(50)
+  created_at     DateTime         @db.Timestamp(0)
+  ap_build_items ap_build_items[]
+
+  @@index([ap_bonus], map: "idx_item_ap_bonus")
+}
+
+model player_statistics {
+  id               Int       @id @default(autoincrement())
+  player_id        Int
+  champion_id      Int
+  games_played     Int?
+  wins             Int?
+  win_rate         Float?
+  avg_kills        Float?
+  avg_deaths       Float?
+  avg_assists      Float?
+  avg_cs_per_min   Float?
+  avg_gold_per_min Float?
+  created_at       DateTime  @db.Timestamp(0)
+  updated_at       DateTime  @db.Timestamp(0)
+  champions        champions @relation(fields: [champion_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  players          players   @relation(fields: [player_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([player_id, champion_id], map: "unique_player_champion")
+  @@index([champion_id], map: "idx_player_stat_champion")
+  @@index([player_id], map: "idx_player_stat_player")
+}
+
+model players {
+  id                 Int                  @id @default(autoincrement())
+  riot_id            String               @unique @db.VarChar(255)
+  summoner_name      String               @db.VarChar(255)
+  tag_line           String?              @db.VarChar(255)
+  profile_icon_url   String?              @db.VarChar(255)
+  summoner_level     Int
+  rank               String?              @db.VarChar(50)
+  tier               String?              @db.VarChar(50)
+  league_points      Int?
+  wins               Int?
+  losses             Int?
+  created_at         DateTime             @db.Timestamp(0)
+  updated_at         DateTime             @db.Timestamp(0)
+  favorite_champions favorite_champions[]
+  player_statistics  player_statistics[]
+
+  @@index([summoner_name], map: "idx_player_name")
+  @@index([riot_id], map: "idx_player_riot_id")
+}

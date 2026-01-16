@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { ChampionService, Champion } from '../../services/champion.service';
+import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-champions-list',
@@ -26,7 +27,9 @@ import { ChampionService, Champion } from '../../services/champion.service';
     MatTabsModule,
     MatInputModule,
     MatFormFieldModule,
-    MatIconModule
+    MatFormFieldModule,
+    MatIconModule,
+    FilterPipe
   ],
   templateUrl: './champions-list.component.html',
   styleUrls: ['./champions-list.component.css']
